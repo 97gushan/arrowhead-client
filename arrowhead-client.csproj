@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>arrowhead_client</RootNamespace>
+  </PropertyGroup>
+
+    <ItemGroup>
+     <Reference Include="ArrowHead">
+       <HintPath>../ah-client-lib/obj/Debug/netstandard2.0/ArrowHead.dll</HintPath>
+     </Reference>
+    </ItemGroup>
+</Project>
