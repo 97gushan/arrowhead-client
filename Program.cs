@@ -1,5 +1,5 @@
 ﻿using System;
-using ArrowHead;
+using ArrowHead.Utils;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -9,11 +9,11 @@ namespace arrowhead_client
 {
     class Program
     {
-        private ArrowHead.Http http;
+        private ArrowHead.Utils.Http http;
         private ArrowHead.Test t;
         public Program()
         {
-            this.http = new ArrowHead.Http("https://postman-echo.com/");
+            this.http = new ArrowHead.Utils.Http("https://postman-echo.com/");
             t = new ArrowHead.Test();
 
         }
@@ -40,7 +40,7 @@ namespace arrowhead_client
             };
             HttpResponseMessage resp = await this.http.Post("post", json);
             string respMessage = await resp.Content.ReadAsStringAsync();
-            Console.WriteLine(JsonConvert.DeserializeObject(respMessage).data);
+            Console.WriteLine(JsonConvert.DeserializeObject(respMessage));
         }
 
         private async void GetExample()
