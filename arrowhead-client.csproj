@@ -11,4 +11,8 @@
        <HintPath>../ah-client-lib/obj/Debug/netstandard2.0/ArrowHead.dll</HintPath>
      </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="newtonsoft.json" Version="12.0.3" />
+    </ItemGroup>
 </Project>
