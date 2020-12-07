@@ -3,12 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Arrowhead_client</RootNamespace>
+    <RootNamespace>ArrowheadProducer</RootNamespace>
   </PropertyGroup>
 
     <ItemGroup>
      <Reference Include="Arrowhead">
-       <HintPath>../ah-client-lib/obj/Debug/netstandard2.0/Arrowhead.dll</HintPath>
+       <HintPath>../../ah-client-lib/obj/Debug/netstandard2.0/Arrowhead.dll</HintPath>
      </Reference>
     </ItemGroup>
 
