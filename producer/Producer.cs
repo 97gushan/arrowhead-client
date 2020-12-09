@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using Arrowhead;
 using Newtonsoft.Json.Linq;
@@ -19,9 +20,10 @@ namespace ArrowheadProducer
         {
             Arrowhead.Utils.Settings settings = new Arrowhead.Utils.Settings(config);
             this.client = new Arrowhead.Client(settings);
-
+            bool useSSL = settings.Interfaces.Any(i => i == "HTTPS-SECURE-JSON");
             using (var server = new RestServer())
             {
+                server.UseHttps = useSSL;
                 server.Host = config.SelectToken("system.ip").ToString();
                 server.Port = config.SelectToken("system.port").ToString();
                 server.LogToConsole().Start();
