@@ -24,7 +24,7 @@
     },
     "service": {
         "serviceDefinition": "producer",
-        "apiUri": "",
-        "interfaces": ["HTTPS-SECURE-JSON"]
+        "apiUri": "/producer",
+        "interfaces": ["HTTP-INSECURE-JSON"]
     }
 }
