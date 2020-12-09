@@ -25,6 +25,6 @@
     "service": {
         "serviceDefinition": "consumer",
         "apiUri": "",
-        "interfaces": ["HTTPS-SECURE-JSON"]
+        "interfaces": ["HTTP-INSECURE-JSON"]
     }
 }
