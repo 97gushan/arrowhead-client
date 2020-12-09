@@ -18,8 +18,12 @@ namespace ArrowheadProducer
 
         public Program(JObject config)
         {
+            // load information about the local client
             Arrowhead.Utils.Settings settings = new Arrowhead.Utils.Settings(config);
+
+            // creating the client registers it in the Service Register
             this.client = new Arrowhead.Client(settings);
+
             bool useSSL = settings.Interfaces.Any(i => i == "HTTPS-SECURE-JSON");
             using (var server = new RestServer())
             {

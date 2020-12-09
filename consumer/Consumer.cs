@@ -23,13 +23,19 @@ namespace ArrowheadConsumer
 
         public Program(JObject consumerConfig, JObject adminConfig)
         {
+            // load information about the local client
             Arrowhead.Utils.Settings settings = new Arrowhead.Utils.Settings(consumerConfig);
             this.client = new Arrowhead.Client(settings);
 
+            // Load information about the Provider System that this Client wants to consume
             Arrowhead.Utils.Settings adminSettings = new Arrowhead.Utils.Settings(adminConfig);
             this.admin = new Arrowhead.Admin(adminSettings);
+
+            // creates orchestration information between this client system and 
+            // the system that has been configured in the Admin Config 
             this.admin.StoreOrchestrate(this.client.GetSystemId());
 
+            // start orchestration between this client and a producer that this client has the rights to consume
             JArray orchestrations = this.client.Orchestrate();
             JObject orchestration = (JObject)orchestrations[0];
 
