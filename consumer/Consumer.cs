@@ -38,7 +38,7 @@ namespace ArrowheadConsumer
             this.serviceUri = orchestration.SelectToken("serviceUri").ToString();
             JArray interfaces = (JArray)orchestration.SelectToken("interfaces");
 
-            if (interfaces[0].SelectToken("interfaceName").ToString() == "HTTPs-SECURE-JSON")
+            if (interfaces[0].SelectToken("interfaceName").ToString() == "HTTPS-SECURE-JSON")
             {
                 producerSSL = true;
             }
