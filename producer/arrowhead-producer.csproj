@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>ArrowheadProducer</RootNamespace>
   </PropertyGroup>
 
     <ItemGroup>
      <Reference Include="Arrowhead">
-       <HintPath>../../ah-client-lib/obj/Debug/netstandard2.0/Arrowhead.dll</HintPath>
+       <HintPath>../../arrowhead-client-library/obj/Debug/net48/Arrowhead.dll</HintPath>
      </Reference>
     </ItemGroup>
 

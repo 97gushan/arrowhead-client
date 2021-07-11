@@ -2,7 +2,7 @@
     "core":  {
         "ssl": true,
         "verifyCertificate": false,
-        "certificatePath": "/home/user/Projects/arrowhead/arrowhead-client/consumer/cert/test_consumer.p12",
+        "certificatePath": "C:/Users/gushan-6/ah/arrowhead-client-example/consumer/cert/test_consumer.p12",
         "certificatePassword": "123456",
         "serviceregistry": {
             "address": "127.0.0.1",

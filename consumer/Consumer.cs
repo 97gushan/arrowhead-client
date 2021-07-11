@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using Arrowhead;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using Arrowhead.Models;
 using Grapevine.Client;
 using Grapevine.Shared;
 
@@ -13,62 +12,56 @@ namespace ArrowheadConsumer
 {
     class Program
     {
-        private Arrowhead.Admin admin;
-        private Arrowhead.Client client;
+        private Arrowhead.Admin Admin;
+        private Arrowhead.Client Client;
 
-        private string producerHost = "";
-        private string producerPort = "";
-        private string serviceUri = "";
-        private bool producerSSL = false;
+        private string ProducerHost = "";
+        private string ProducerPort = "";
+        private string ServiceUri = "";
+        private bool ProducerSSL = false;
 
         public Program(JObject consumerConfig, JObject adminConfig)
         {
             // load information about the local client
             Arrowhead.Utils.Settings settings = new Arrowhead.Utils.Settings(consumerConfig);
-            this.client = new Arrowhead.Client(settings);
+            this.Client = new Arrowhead.Client(settings);
 
             // Load information about the Provider System that this Client wants to consume
             Arrowhead.Utils.Settings adminSettings = new Arrowhead.Utils.Settings(adminConfig);
-            this.admin = new Arrowhead.Admin(adminSettings);
+            this.Admin = new Arrowhead.Admin(adminSettings);
 
             // creates orchestration information between this client system and 
             // the system that has been configured in the Admin Config 
-            this.admin.StoreOrchestrate(this.client.GetSystemId());
+            this.Admin.StoreOrchestrate(this.Client.GetSystemId());
 
             // start orchestration between this client and a producer that this client has the rights to consume
-            JArray orchestrations = this.client.Orchestrate();
-            JObject orchestration = (JObject)orchestrations[0];
+            OrchestratorResponse[] orchestrations = this.Client.Orchestrate();
 
-            this.producerHost = orchestration.SelectToken("provider.address").ToString();
-            this.producerPort = orchestration.SelectToken("provider.port").ToString();
-            this.serviceUri = orchestration.SelectToken("serviceUri").ToString();
-            JArray interfaces = (JArray)orchestration.SelectToken("interfaces");
-
-            if (interfaces[0].SelectToken("interfaceName").ToString() == "HTTPS-SECURE-JSON")
+            foreach (OrchestratorResponse orchestration in orchestrations)
             {
-                producerSSL = true;
-            }
-            else
-            {
-                producerSSL = false;
-            }
+                this.ProducerHost = orchestration.Provider.Address;
+                this.ProducerPort = orchestration.Provider.Port;
+                this.ServiceUri = orchestration.ServiceUri;
 
-            Console.WriteLine("Orchestration against http" + (producerSSL ? "s://" : "://") + this.producerHost + ":" + this.producerPort + this.serviceUri + " was started");
+                ProducerSSL = orchestration.Interfaces[0] == "HTTPS-SECURE-JSON";
+
+                Console.WriteLine("Orchestration against http" + (ProducerSSL ? "s://" : "://") + this.ProducerHost + ":" + this.ProducerPort + this.ServiceUri + " was started");
+            }
         }
 
         public void ConsumeService()
         {
             RestClient client = new RestClient();
 
-            client.Host = this.producerHost;
-            client.Port = Int32.Parse(this.producerPort);
+            client.Host = this.ProducerHost;
+            client.Port = Int32.Parse(this.ProducerPort);
 
-            RestRequest req = new RestRequest(this.serviceUri + "/demo");
-            req.HttpMethod = HttpMethod.GET;
+            RestRequest request = new RestRequest(this.ServiceUri + "/demo");
+            request.HttpMethod = HttpMethod.GET;
             while (true)
             {
-                RestResponse resp = (RestResponse)client.Execute(req);
-                Console.WriteLine(JsonConvert.DeserializeObject<JObject>(resp.GetContent()));
+                RestResponse response = (RestResponse)client.Execute(request);
+                Console.WriteLine(JsonConvert.DeserializeObject<JObject>(response.GetContent()));
                 System.Threading.Thread.Sleep(1000);
             }
         }

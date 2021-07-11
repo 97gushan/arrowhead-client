@@ -2,6 +2,7 @@
 using System.Linq;
 using System.IO;
 using Arrowhead;
+using Arrowhead.Utils;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Grapevine.Shared;
@@ -14,15 +15,15 @@ namespace ArrowheadProducer
 {
     class Program
     {
-        private Arrowhead.Client client;
+        private Arrowhead.Client Client;
 
         public Program(JObject config)
         {
             // load information about the local client
-            Arrowhead.Utils.Settings settings = new Arrowhead.Utils.Settings(config);
+            Settings settings = new Settings(config);
 
             // creating the client registers it in the Service Register
-            this.client = new Arrowhead.Client(settings);
+            this.Client = new Arrowhead.Client(settings);
 
             bool useSSL = settings.Interfaces.Any(i => i == "HTTPS-SECURE-JSON");
             using (var server = new RestServer())
