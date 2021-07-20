@@ -1,12 +1,23 @@
-﻿using System;
+﻿/********************************************************************************
+ * Copyright (c) 2021 LTU
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   LTU - implementation
+ ********************************************************************************/
+
+using System;
 using System.IO;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Arrowhead.Models;
 using Grapevine.Client;
 using Grapevine.Shared;
-
 
 namespace ArrowheadConsumer
 {
